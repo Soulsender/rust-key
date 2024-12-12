@@ -1,17 +1,53 @@
 use std::env;
+use ciphers::base64;
+use clap::Parser;
 
 // import functions from the submodules
 mod ciphers;
 
-fn main() {
-    // get command line arguments as a String Vector
-    let args: Vec<String> = env::args().collect();
-    // set the operation String to the second arg
-    let text = &args[2];
+// struct of all the cli arguments
+#[derive(Parser)]
+#[command(version, about, long_about = None)]
+struct Cli {
+    // text to encode/decode
+    #[arg(short, long, required = true, help = "The string to operate on")]
+    text: String,
 
-    if &args[1] == "encode" {
-        println!("{}", ciphers::base64::encode(text.to_string()));
-    } else if &args[1] == "decode" {
-        println!("{}", ciphers::base64::decode(text));
+    // cipher to use
+    #[arg(short, long, required = true, help = "Specify the cipher to encode/decode with")]
+    method: String,
+
+    // encode flag (optional)
+    #[clap(short, long, default_value_t = false, required = false, help = "Encode text (optional)")]
+    encode: bool,
+
+    // decode flag (optional)
+    #[clap(short, long, default_value_t = false, required = false, help = "Decode text (optional)")]
+    decode: bool
+}
+
+
+fn main() {
+    let args = Cli::parse();
+    
+    if args.encode {
+        encode(&args.method, args.text);
+    }
+    else if args.decode {
+        decode(&args.method, args.text);
+    }    
+}
+
+fn encode(method: &str, text: String) {
+    match method {
+        "base64" => println!("{}", ciphers::base64::encode(text)),
+        _ => println!("[!] Error: invalid encoding type")
+    }
+}
+
+fn decode(method: &str, text: String) {
+    match method {
+        "base64" => println!("{}", ciphers::base64::decode(&text)),
+        _ => println!("[!] Error: invalid decoding type")
     }
 }

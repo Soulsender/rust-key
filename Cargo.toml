@@ -5,3 +5,4 @@ edition = "2021"
 
 [dependencies]
 rbase64 = "2.0.3"
+clap = { version = "4.0", features = ["derive"] }
