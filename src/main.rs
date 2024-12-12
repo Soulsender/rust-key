@@ -32,29 +32,26 @@ fn main() {
     // this whole stupid thing is because clap refuses to take a String optionally, so it has to be an enum
     match &args.cipher {
         Some(ref cipher_value) => {
-            if cipher_value == "base64" {
-                match &args.text {
-                    Some(ref text_value) => {
-                        if args.encode {
-                            encode(cipher_value, text_value.to_string());
-                        }
-                        // if decode flag is specified
-                        else if args.decode {
-                            decode(cipher_value, text_value.to_string());
-                        }
-                        else {
-                            println!("You didn't specify an action. What do you want me to do?");
-                        }
+            match &args.text {
+                Some(ref text_value) => {
+                    if args.encode {
+                        encode(cipher_value, text_value.to_string());
                     }
-                    None => {
-                        println!("No text provided");
+                    // if decode flag is specified
+                    else if args.decode {
+                        decode(cipher_value, text_value.to_string());
+                    }
+                    else {
+                        println!("You didn't specify an action. What do you want me to do?");
                     }
                 }
-            } else {
-                println!("Unknown cipher: {}", cipher_value);
+                None => {
+                    // error handled by clap
+                }
             }
         }
         None => {
+            // if no arguments are found, or if just text is used, print the list of ciphers
             list_ciphers();
         }
     }    
@@ -77,8 +74,10 @@ fn decode(method: &str, text: String) {
 }
 
 fn list_ciphers() {
-    println!("AVAILABLE CIPHERS:
+    println!("
+    AVAILABLE CIPHERS:
     
-    base64")
+    base64
+    ")
 }
 
