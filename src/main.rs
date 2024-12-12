@@ -1,4 +1,4 @@
-use clap::Parser;
+use clap::{Parser, ValueHint};
 
 // import functions from the submodules
 mod ciphers;
@@ -7,25 +7,21 @@ mod ciphers;
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
 struct Cli {
-    // text to encode/decode
-    #[arg(short, long, required = false, alias = "input", help = "The string to operate on")]
-    text: String,
-
     // cipher to use
-    #[arg(short, long, required = false, help = "Specify the cipher to encode/decode with")]
+    #[arg(short, long, default_missing_value = "help", help = "Specify the cipher to encode/decode with")]
     cipher: String,
 
-    // encode flag (optional)
-    #[clap(short, long, default_value_t = false, required = false, requires = "cipher", help = "Encode text")]
+    // text to encode/decode
+    #[arg(short, long, help = "The string to operate on")]
+    text: String,
+
+    // encode flag
+    #[clap(short, long, default_value_t = false, conflicts_with("decode"), requires = "cipher", help = "Encode text")]
     encode: bool,
 
-    // decode flag (optional)
-    #[clap(short, long, default_value_t = false, required = false, requires = "cipher", help = "Decode text")]
+    // decode flag
+    #[clap(short, long, default_value_t = false, conflicts_with("encode"), requires = "cipher", help = "Decode text")]
     decode: bool,
-
-    // list ciphers (optional)
-    #[arg(long,  default_value_t = false, required = false, help = "List ciphers")]
-    list: bool,
 }
 
 fn main() {
@@ -39,11 +35,8 @@ fn main() {
     else if args.decode {
         decode(&args.cipher, args.text);
     }
-    else if args.list {
-        list_ciphers();
-    }
     else {
-        println!("You didn't specify an action. Tf you want me to do?");
+        println!("You didn't specify an action. What do you want me to do?");
     }
 }
 
