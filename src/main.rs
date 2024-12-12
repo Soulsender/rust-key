@@ -1,4 +1,5 @@
-use clap::{Parser, ValueHint};
+use ciphers::base64;
+use clap::{Parser};
 
 // import functions from the submodules
 mod ciphers;
@@ -8,12 +9,12 @@ mod ciphers;
 #[command(version, about, long_about = None)]
 struct Cli {
     // cipher to use
-    #[arg(short, long, default_missing_value = "help", help = "Specify the cipher to encode/decode with")]
-    cipher: String,
+    #[arg(short, long, required = false, help = "Specify the cipher to encode/decode with\nRun the program with no arguments to get a list of ciphers")]
+    cipher: Option<String>,
 
     // text to encode/decode
-    #[arg(short, long, help = "The string to operate on")]
-    text: String,
+    #[arg(short, long, required = false, help = "The string to operate on")]
+    text: Option<String>,
 
     // encode flag
     #[clap(short, long, default_value_t = false, conflicts_with("decode"), requires = "cipher", help = "Encode text")]
@@ -22,22 +23,41 @@ struct Cli {
     // decode flag
     #[clap(short, long, default_value_t = false, conflicts_with("encode"), requires = "cipher", help = "Decode text")]
     decode: bool,
+
 }
 
 fn main() {
     let args = Cli::parse();
 
-    // if encode flag is specified
-    if args.encode {
-        encode(&args.cipher, args.text);
-    }
-    // if decode flag is specified
-    else if args.decode {
-        decode(&args.cipher, args.text);
-    }
-    else {
-        println!("You didn't specify an action. What do you want me to do?");
-    }
+    // this whole stupid thing is because clap refuses to take a String optionally, so it has to be an enum
+    match &args.cipher {
+        Some(ref cipher_value) => {
+            if cipher_value == "base64" {
+                match &args.text {
+                    Some(ref text_value) => {
+                        if args.encode {
+                            encode(cipher_value, text_value.to_string());
+                        }
+                        // if decode flag is specified
+                        else if args.decode {
+                            decode(cipher_value, text_value.to_string());
+                        }
+                        else {
+                            println!("You didn't specify an action. What do you want me to do?");
+                        }
+                    }
+                    None => {
+                        println!("No text provided");
+                    }
+                }
+            } else {
+                println!("Unknown cipher: {}", cipher_value);
+            }
+        }
+        None => {
+            list_ciphers();
+        }
+    }    
 }
 
 // encode function
@@ -57,10 +77,8 @@ fn decode(method: &str, text: String) {
 }
 
 fn list_ciphers() {
-    println!("
-    AVAILABLE CIPHERS:
-
-    base64
+    println!("AVAILABLE CIPHERS:
     
-    ")
+    base64")
 }
+
