@@ -1,5 +1,3 @@
-use std::env;
-use ciphers::base64;
 use clap::Parser;
 
 // import functions from the submodules
@@ -15,7 +13,7 @@ struct Cli {
 
     // cipher to use
     #[arg(short, long, required = true, help = "Specify the cipher to encode/decode with")]
-    method: String,
+    cipher: String,
 
     // encode flag (optional)
     #[clap(short, long, default_value_t = false, required = false, help = "Encode text (optional)")]
@@ -31,10 +29,10 @@ fn main() {
     let args = Cli::parse();
     
     if args.encode {
-        encode(&args.method, args.text);
+        encode(&args.cipher, args.text);
     }
     else if args.decode {
-        decode(&args.method, args.text);
+        decode(&args.cipher, args.text);
     }    
 }
 
