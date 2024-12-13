@@ -1,5 +1,4 @@
-use ciphers::base64;
-use clap::{Parser};
+use clap::Parser;
 
 // import functions from the submodules
 mod ciphers;
@@ -23,14 +22,14 @@ struct Cli {
     // decode flag
     #[clap(short, long, default_value_t = false, conflicts_with("encode"), requires = "cipher", help = "Decode text")]
     decode: bool,
-
 }
 
 fn main() {
     let args = Cli::parse();
 
-    // this whole stupid thing is because clap refuses to take a String optionally, so it has to be an enum
+    // this whole stupid thing is because clap refuses to take a String optionally, so it has to be an enum (which makes sense for rust, but i'm still gonna complain about it as a python programmer)
     match &args.cipher {
+        // any cipher value is taken - the error handling is in the encode() and decode() functions
         Some(ref cipher_value) => {
             match &args.text {
                 Some(ref text_value) => {
@@ -61,6 +60,7 @@ fn main() {
 fn encode(method: &str, text: String) {
     match method {
         "base64" => println!("{}", ciphers::base64::encode(text)),
+        "leet" => println!("{}", ciphers::leet::encode(text)),
         _ => println!("Error: invalid encoding type")
     }
 }
@@ -69,15 +69,18 @@ fn encode(method: &str, text: String) {
 fn decode(method: &str, text: String) {
     match method {
         "base64" => println!("{}", ciphers::base64::decode(&text)),
+        "leet" => println!("{}", ciphers::leet::decode(&text)),
         _ => println!("Error: invalid decoding type")
     }
 }
 
 fn list_ciphers() {
     println!("
+    Print help with --help or -h
+
     AVAILABLE CIPHERS:
-    
-    base64
+    base64  - Traditional base64
+    leet    - 1337SP34K
     ")
 }
 
