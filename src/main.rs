@@ -71,7 +71,7 @@ fn encode(method: &str, text: String) {
         "sha256" => ciphers::sha::encode_sha256(text),
         "sha384" => ciphers::sha::encode_sha384(text),
         "sha512" => ciphers::sha::encode_sha512(text),
-        "leet" => println!("{}", ciphers::leet::encode(text)),
+        // "leet" => println!("{}", ciphers::leet::encode(text)),
         _ => println!("Error: invalid encoding type")
     }
 }
@@ -81,7 +81,7 @@ fn decode(method: &str, text: String) {
     match method {
         "base64" => println!("{}", ciphers::base64::decode(&text)),
         "hex" => println!("{}", ciphers::hex::decode(&text)),
-        "leet" => println!("{}", ciphers::leet::decode(&text)),
+        // "leet" => println!("{}", ciphers::leet::decode(&text)),
         _ => println!("Error: invalid decoding type")
     }
 }

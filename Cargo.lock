@@ -368,14 +368,11 @@ name = "rust-key"
 version = "0.1.0"
 dependencies = [
  "clap",
-<<<<<<< HEAD
  "hex",
  "md2",
  "md4",
  "md5",
-=======
  "phf",
->>>>>>> d169d277d234157a0619bca958fff89c590dbbce
  "rbase64",
  "sha2",
 ]
