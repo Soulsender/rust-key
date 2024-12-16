@@ -32,26 +32,22 @@ fn main() {
     // this whole stupid thing is because clap refuses to take a String optionally, so it has to be an enum
     match &args.cipher {
         Some(ref cipher_value) => {
-            if cipher_value == "base64" {
-                match &args.text {
-                    Some(ref text_value) => {
-                        if args.encode {
-                            encode(cipher_value, text_value.to_string());
-                        }
-                        // if decode flag is specified
-                        else if args.decode {
-                            decode(cipher_value, text_value.to_string());
-                        }
-                        else {
-                            println!("You didn't specify an action. What do you want me to do?");
-                        }
+            match &args.text {
+                Some(ref text_value) => {
+                    if args.encode {
+                        encode(cipher_value, text_value.to_string());
                     }
-                    None => {
-                        println!("No text provided");
+                    // if decode flag is specified
+                    else if args.decode {
+                        decode(cipher_value, text_value.to_string());
+                    }
+                    else {
+                        println!("You didn't specify an action. What do you want me to do?");
                     }
                 }
-            } else {
-                println!("Unknown cipher: {}", cipher_value);
+                None => {
+                    println!("No text provided");
+                }
             }
         }
         None => {
@@ -63,7 +59,18 @@ fn main() {
 // encode function
 fn encode(method: &str, text: String) {
     match method {
+        // encoding
         "base64" => println!("{}", ciphers::base64::encode(text)),
+        "hex" => ciphers::hex::encode(text),
+
+        // hashing algorithms
+        "md5" => ciphers::md::encode_md5(text),
+        "md4" => ciphers::md::encode_md4(text),
+        "md2" => ciphers::md::encode_md2(text),
+        "sha224" => ciphers::sha::encode_sha224(text),
+        "sha256" => ciphers::sha::encode_sha256(text),
+        "sha384" => ciphers::sha::encode_sha384(text),
+        "sha512" => ciphers::sha::encode_sha512(text),
         _ => println!("Error: invalid encoding type")
     }
 }
@@ -72,6 +79,7 @@ fn encode(method: &str, text: String) {
 fn decode(method: &str, text: String) {
     match method {
         "base64" => println!("{}", ciphers::base64::decode(&text)),
+        "hex" => println!("{}", ciphers::hex::decode(&text)),
         _ => println!("Error: invalid decoding type")
     }
 }
@@ -79,6 +87,15 @@ fn decode(method: &str, text: String) {
 fn list_ciphers() {
     println!("AVAILABLE CIPHERS:
     
-    base64")
+    base64
+    
+    AVAILABLE HASHING ALGORITHMS:
+    md5
+    md4
+    md2
+    sha224
+    sha256
+    sha384
+    sha512")
 }
 
