@@ -27,33 +27,19 @@ struct Cli {
 fn main() {
     let args = Cli::parse();
 
-    // this whole stupid thing is because clap refuses to take a String optionally, so it has to be an enum (which makes sense for rust, but i'm still gonna complain about it as a python programmer)
-    match &args.cipher {
-        // any cipher value is taken - the error handling is in the encode() and decode() functions
-        Some(ref cipher_value) => {
-            match &args.text {
-                Some(ref text_value) => {
-                    if args.encode {
-                        encode(cipher_value, text_value.to_string());
-                    }
-                    // if decode flag is specified
-                    else if args.decode {
-                        decode(cipher_value, text_value.to_string());
-                    }
-                    else {
-                        println!("You didn't specify an action. What do you want me to do?");
-                    }
-                }
-                None => {
-                    // error handled by clap
-                }
+    match (&args.cipher, &args.text) {
+        (Some(cipher_value), Some(text_value)) => {
+            if args.encode {
+                encode(cipher_value, text_value.to_string());
+            } else if args.decode {
+                decode(cipher_value, text_value.to_string());
+            } else {
+                eprintln!("You didn't specify an action. Please choose encode or decode.");
             }
         }
-        None => {
-            // if no arguments are found, or if just text is used, print the list of ciphers
-            list_ciphers();
-        }
-    }    
+        (Some(_), None) => { /* Handled by clap */ }
+        (None, _) => list_ciphers(),
+    }
 }
 
 // encode function
@@ -61,6 +47,7 @@ fn encode(method: &str, text: String) {
     match method {
         "base64" => println!("{}", ciphers::base64::encode(text)),
         "leet" => println!("{}", ciphers::leet::encode(text)),
+        "sha1" => println!("{}", ciphers::sha1::encode(text)),
         _ => println!("Error: invalid encoding type")
     }
 }
@@ -81,6 +68,9 @@ fn list_ciphers() {
     AVAILABLE CIPHERS:
     base64  - Traditional base64
     leet    - 1337SP34K
+    
+    AVAILABLE HASHING ALGORITHMS:
+    sha1    - SHA1 Hash
     ")
 }
 

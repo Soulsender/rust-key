@@ -13,6 +13,7 @@ static LEET_MAP: phf::Map<char, char> = phf_map! {
     't' => '7',
 };
 
+// I could just generate this at runtime but why waste the memory?
 static LEET_MAP_REV: phf::Map<char, char> = phf_map! {
     '4' => 'a',
     '8' => 'b',
