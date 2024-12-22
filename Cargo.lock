@@ -122,15 +122,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5b63caa9aa9397e2d9480a9b13673856c78d8ac123288526c37d7839f2a86990"
 
 [[package]]
-<<<<<<< HEAD
 name = "const-oid"
 version = "0.9.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2459377285ad874054d797f3ccebf984978aa39129f6eafde5cdc8315b612f8"
 
 [[package]]
-=======
->>>>>>> b098eeef179c8efd9e29f24f1641039af08ebbff
 name = "cpufeatures"
 version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -181,10 +178,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9ed9a281f7bc9b7576e61468ba615a66a5c8cfdff42420a70aa82701a3b1e292"
 dependencies = [
  "block-buffer",
-<<<<<<< HEAD
  "const-oid",
-=======
->>>>>>> b098eeef179c8efd9e29f24f1641039af08ebbff
  "crypto-common",
 ]
 
@@ -248,8 +242,6 @@ dependencies = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "md2"
 version = "0.10.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -268,7 +260,6 @@ dependencies = [
 ]
 
 [[package]]
->>>>>>> b098eeef179c8efd9e29f24f1641039af08ebbff
 name = "md5"
 version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -394,11 +385,11 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "hex",
-<<<<<<< HEAD
+ "md2",
+ "md4",
  "md5",
  "phf",
  "rbase64",
- "sha1",
  "sha1-checked",
  "sha2",
  "sha3",
@@ -423,14 +414,6 @@ checksum = "89f599ac0c323ebb1c6082821a54962b839832b03984598375bff3975b804423"
 dependencies = [
  "digest",
  "sha1",
-=======
- "md2",
- "md4",
- "md5",
- "phf",
- "rbase64",
- "sha2",
->>>>>>> b098eeef179c8efd9e29f24f1641039af08ebbff
 ]
 
 [[package]]
@@ -442,7 +425,6 @@ dependencies = [
  "cfg-if",
  "cpufeatures",
  "digest",
-<<<<<<< HEAD
 ]
 
 [[package]]
@@ -453,8 +435,6 @@ checksum = "75872d278a8f37ef87fa0ddbda7802605cb18344497949862c0d4dcb291eba60"
 dependencies = [
  "digest",
  "keccak",
-=======
->>>>>>> b098eeef179c8efd9e29f24f1641039af08ebbff
 ]
 
 [[package]]

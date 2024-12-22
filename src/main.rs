@@ -48,17 +48,17 @@ fn encode(method: &str, text: String) {
         // encoding
         "base64" => println!("{}", ciphers::base64::encode(text)),
         "hex" => ciphers::hex::encode(text),
+        "leet" => println!("{}", ciphers::leet::encode(text)),
 
         // hashing algorithms
         "md5" => ciphers::md::encode_md5(text),
         "md4" => ciphers::md::encode_md4(text),
         "md2" => ciphers::md::encode_md2(text),
+        "sha1" => println!("{}", ciphers::sha1::encode(text)),
         "sha224" => ciphers::sha::encode_sha224(text),
         "sha256" => ciphers::sha::encode_sha256(text),
         "sha384" => ciphers::sha::encode_sha384(text),
         "sha512" => ciphers::sha::encode_sha512(text),
-        // "leet" => println!("{}", ciphers::leet::encode(text)),
-        "sha1" => println!("{}", ciphers::sha1::encode(text)),
         _ => println!("Error: invalid encoding type")
     }
 }
@@ -68,7 +68,7 @@ fn decode(method: &str, text: String) {
     match method {
         "base64" => println!("{}", ciphers::base64::decode(&text)),
         "hex" => println!("{}", ciphers::hex::decode(&text)),
-        // "leet" => println!("{}", ciphers::leet::decode(&text)),
+        "leet" => println!("{}", ciphers::leet::decode(&text)),
         _ => println!("Error: invalid decoding type")
     }
 }
@@ -81,6 +81,14 @@ fn list_ciphers() {
     AVAILABLE CIPHERS:
     base64  - Traditional base64
     leet    - 1337SP34K
+    hex     - Traditional hex code
+
+    AVAILABLE HASHING ALGORITHMS
+    sha1
+    sha224
+    sha256
+    sha384
+    sha512
     ")
 }
 
