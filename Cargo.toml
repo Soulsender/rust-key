@@ -6,6 +6,11 @@ edition = "2021"
 [dependencies]
 rbase64 = "2.0.3"
 clap = { version = "4.0", features = ["derive"] }
+md5 = "0.7.0"
+hex = "0.4.3"
+sha2 = "0.10.8"
+md4 = "0.10.2"
+md2 = "0.10.2"
 phf = { version = "0.11", features = ["macros"] }
 sha1 = "0.10.6"
 sha2 = "0.10.8"
