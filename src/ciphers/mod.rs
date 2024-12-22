@@ -6,4 +6,3 @@ pub mod leet;
 pub mod md;
 pub mod sha;
 pub mod hex;
-pub mod sha1;

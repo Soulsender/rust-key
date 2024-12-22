@@ -54,7 +54,7 @@ fn encode(method: &str, text: String) {
         "md5" => ciphers::md::encode_md5(text),
         "md4" => ciphers::md::encode_md4(text),
         "md2" => ciphers::md::encode_md2(text),
-        "sha1" => println!("{}", ciphers::sha1::encode(text)),
+        "sha1" => println!("{}", ciphers::sha::encode_sha1(text)),
         "sha224" => ciphers::sha::encode_sha224(text),
         "sha256" => ciphers::sha::encode_sha256(text),
         "sha384" => ciphers::sha::encode_sha384(text),
@@ -83,7 +83,7 @@ fn list_ciphers() {
     leet    - 1337SP34K
     hex     - Traditional hex code
 
-    AVAILABLE HASHING ALGORITHMS
+    AVAILABLE HASHING ALGORITHMS:
     sha1
     sha224
     sha256
