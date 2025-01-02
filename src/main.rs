@@ -49,6 +49,7 @@ fn encode(method: &str, text: String) {
         "base64" => println!("{}", ciphers::base64::encode(text)),
         "hex" => ciphers::hex::encode(text),
         "leet" => println!("{}", ciphers::leet::encode(text)),
+        "binary" => println!("{}", ciphers::bin::encode(text)),
 
         // hashing algorithms
         "md5" => ciphers::md::encode_md5(text),
