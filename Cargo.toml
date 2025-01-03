@@ -2,6 +2,10 @@
 name = "rust-key"
 version = "0.1.0"
 edition = "2021"
+description = "A CLI tool for ciphering, encoding, and hashing"
+repository = "https://github.com/Soulsender/rust-key" 
+license = "GPL 3.0"
+authors = ["Soulsender <soul@soulsender.me>"]
 
 [dependencies]
 rbase64 = "2.0.3"

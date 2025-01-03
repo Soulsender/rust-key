@@ -70,19 +70,20 @@ fn decode(method: &str, text: String) {
         "base64" => println!("{}", ciphers::base64::decode(&text)),
         "hex" => println!("{}", ciphers::hex::decode(&text)),
         "leet" => println!("{}", ciphers::leet::decode(&text)),
+        "binary" => println!("{}", ciphers::bin::decode(text)),
         _ => println!("Error: invalid decoding type")
     }
 }
 
 fn list_ciphers() {
     println!("
-    
     Print help with --help or -h
 
     AVAILABLE CIPHERS:
     base64  - Traditional base64
     leet    - 1337SP34K
     hex     - Traditional hex code
+    binary  - Ones and zeros (ex. 01101000)
 
     AVAILABLE HASHING ALGORITHMS:
     sha1
