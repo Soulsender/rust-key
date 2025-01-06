@@ -1,3 +1,5 @@
+use std::fs::File;
+use std::io::ErrorKind;
 use clap::Parser;
 
 // import functions from the submodules
@@ -73,6 +75,16 @@ fn decode(method: &str, text: String) {
         "binary" => println!("{}", ciphers::bin::decode(text)),
         _ => println!("Error: invalid decoding type")
     }
+}
+
+fn open_file(path: String) {
+    let file = File::open(path).unwrap_or_else(|error| {
+        if error.kind() == ErrorKind::NotFound {
+            panic!("Error: no file found");
+        } else {
+            panic!("Hm I didn't expect this... \n {error:?}");
+        }
+    });
 }
 
 fn list_ciphers() {
